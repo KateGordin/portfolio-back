@@ -27,15 +27,24 @@ router.post("/", async (req, res) => {
 //create order item with orderId and actorId
 router.post("/addOrderItem", async (req, res) => {
   try {
-    const { orderId, actorId } = req.body;
-    const order = await Order.findByPk(orderId);
-    if (!order) {
-      return res.status(400).send("Order not found");
+    const { actorId } = req.body;
+    // Find the latest order with status === 'draft' if it is not there create it
+    // const order = await Order.findByPk(orderId);
+    // if (!order) {
+    //   return res.status(400).send("Order not found");
+    // }
+
+    let currentOrder = await Order.findOne({
+      where: { status: "draft", userId: 1 },
+    }); // TODO: Change userID based on Auth
+    if (!currentOrder) {
+      currentOrder = await Order.create({ userId: 1, status: "draft" });
     }
-    if (order.status !== "draft") {
-      return res.status(400).send("This order is not draft");
-    }
-    const orderItem = await OrderItem.create({ orderId, actorId });
+
+    const orderItem = await OrderItem.create({
+      orderId: currentOrder.id,
+      actorId,
+    });
 
     res.json(orderItem);
   } catch (e) {
