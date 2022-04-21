@@ -6,7 +6,7 @@ const Actor = require("../models").actor;
 const OrderItem = require("../models").orderItem;
 const router = new Router();
 
-//new order (with dateTime and userId)
+//create new order (with dateTime and userId)
 router.post("/", async (req, res) => {
   try {
     if (!req.body.dateTime || !req.body.userId) {
@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//order item with orderId and actorId
+//create order item with orderId and actorId
 router.post("/addOrderItem", async (req, res) => {
   try {
     const { orderId, actorId } = req.body;
@@ -55,6 +55,20 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//delete
+//delete order item
+router.delete("/deleteOrderItem/:id", async (req, res) => {
+  try {
+    const orderId = parseInt(req.params.id);
+    const orderItem = await OrderItem.findByPk(orderId);
+
+    if (!orderItem) {
+      return res.status(404).send("Order item does not exist");
+    }
+    await orderItem.destroy();
+    res.status(204).send();
+  } catch (e) {
+    console.error(e);
+  }
+});
 
 module.exports = router;
