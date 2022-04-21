@@ -1,4 +1,5 @@
 "use strict";
+const bcrypt = require("bcrypt");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -8,28 +9,28 @@ module.exports = {
         {
           name: "Liam",
           email: "l@l.com",
-          password: "liam",
+          password: bcrypt.hashSync("liam", 10),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           name: "Olivia",
           email: "o@o.com",
-          password: "olivia",
+          password: bcrypt.hashSync("olivia", 10),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           name: "James",
           email: "j@j.com",
-          password: "james",
+          password: bcrypt.hashSync("james", 10),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           name: "Henry",
           email: "h@h.com",
-          password: "henry",
+          password: bcrypt.hashSync("henry", 10),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
