@@ -83,4 +83,23 @@ router.delete("/deleteOrderItem/:id", async (req, res) => {
   }
 });
 
+//change status of order from draft to pending
+router.patch("/submit", async (req, res) => {
+  try {
+    const { id, eventName } = req.body;
+    const orderToUpdateStatus = await Order.findByPk(id);
+    const updatedOrder = await orderToUpdateStatus.update({
+      status: "pending",
+      eventName,
+    });
+    if (!orderToUpdateStatus) {
+      return res.status(404).send("This order doesn't found");
+    }
+    //update status in order
+    res.send(updatedOrder.toJSON());
+  } catch (e) {
+    console.error(e);
+  }
+});
+
 module.exports = router;
