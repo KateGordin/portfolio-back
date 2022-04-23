@@ -5,6 +5,7 @@ const Order = require("../models").order;
 const Actor = require("../models").actor;
 const OrderItem = require("../models").orderItem;
 const router = new Router();
+const authMiddleWare = require("../auth/middleware");
 
 //create new order (with dateTime and userId)
 router.post("/", async (req, res) => {
@@ -25,7 +26,7 @@ router.post("/", async (req, res) => {
 });
 
 //create order item with orderId and actorId
-router.post("/addOrderItem", async (req, res) => {
+router.post("/addOrderItem", authMiddleWare, async (req, res) => {
   try {
     const { actorId } = req.body;
     // Find the latest order with status === 'draft' if it is not there create it
@@ -36,7 +37,8 @@ router.post("/addOrderItem", async (req, res) => {
 
     let currentOrder = await Order.findOne({
       where: { status: "draft", userId: 1 },
-    }); // TODO: Change userID based on Auth
+    });
+
     if (!currentOrder) {
       currentOrder = await Order.create({ userId: 1, status: "draft" });
     }
@@ -53,12 +55,13 @@ router.post("/addOrderItem", async (req, res) => {
 });
 
 //all orders with orderItems
-router.get("/", async (req, res, next) => {
+router.get("/getDraftOrder", authMiddleWare, async (req, res, next) => {
   try {
-    const orders = await Order.findAll({
+    const order = await Order.findOne({
+      where: { status: "draft", userId: req.user.id },
       include: [{ model: OrderItem, include: [Actor] }],
     });
-    res.send(orders);
+    res.send(order);
   } catch (e) {
     console.error(e);
   }
@@ -67,8 +70,8 @@ router.get("/", async (req, res, next) => {
 //delete order item
 router.delete("/deleteOrderItem/:id", async (req, res) => {
   try {
-    const orderId = parseInt(req.params.id);
-    const orderItem = await OrderItem.findByPk(orderId);
+    const orderItemId = parseInt(req.params.id);
+    const orderItem = await OrderItem.findByPk(orderItemId);
 
     if (!orderItem) {
       return res.status(404).send("Order item does not exist");
