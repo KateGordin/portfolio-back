@@ -3,6 +3,9 @@ const { Router } = require("express");
 const { toJWT } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
 const User = require("../models/").user;
+const Order = require("../models").order;
+const OrderItem = require("../models").orderItem;
+const Actor = require("../models").actor;
 
 const router = new Router();
 
@@ -34,7 +37,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { email, password, name, isArtist } = req.body;
+  const { email, password, name } = req.body;
   if (!email || !password || !name) {
     return res.status(400).send("Please provide an email, password and a name");
   }
@@ -68,7 +71,12 @@ router.post("/signup", async (req, res) => {
 router.get("/me", authMiddleware, async (req, res) => {
   // don't send back the password hash
   delete req.user.dataValues["password"];
-  res.status(200).send({ ...req.user.dataValues });
+
+  const order = await Order.findOne({
+    where: { status: "draft", userId: req.user.id },
+    include: [{ model: OrderItem, include: [Actor] }],
+  });
+  res.status(200).send({ user: req.user.dataValues, cart: order });
 });
 
 module.exports = router;
