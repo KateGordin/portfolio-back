@@ -1,5 +1,4 @@
 const express = require("express");
-const order = require("../models/order");
 const { Router } = express;
 const Order = require("../models").order;
 const Actor = require("../models").actor;
@@ -29,14 +28,9 @@ router.post("/", async (req, res) => {
 router.post("/addOrderItem", authMiddleWare, async (req, res) => {
   try {
     const { actorId } = req.body;
-    // Find the latest order with status === 'draft' if it is not there create it
-    // const order = await Order.findByPk(orderId);
-    // if (!order) {
-    //   return res.status(400).send("Order not found");
-    // }
 
     let currentOrder = await Order.findOne({
-      where: { status: "draft", userId: 1 },
+      where: { status: "draft", userId: req.user.id },
     });
 
     if (!currentOrder) {
@@ -47,8 +41,11 @@ router.post("/addOrderItem", authMiddleWare, async (req, res) => {
       orderId: currentOrder.id,
       actorId,
     });
+    const newOrderItem = await OrderItem.findByPk(orderItem.id, {
+      include: [Actor],
+    });
 
-    res.json(orderItem);
+    res.json(newOrderItem);
   } catch (e) {
     console.log(e.message);
   }
