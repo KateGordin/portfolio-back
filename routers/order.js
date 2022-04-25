@@ -5,6 +5,7 @@ const Actor = require("../models").actor;
 const OrderItem = require("../models").orderItem;
 const router = new Router();
 const authMiddleWare = require("../auth/middleware");
+const { sendEmail } = require("../services/emailService");
 
 //create new order (with dateTime and userId)
 router.post("/", async (req, res) => {
@@ -83,7 +84,8 @@ router.delete("/deleteOrderItem/:id", async (req, res) => {
 //change status of order from draft to pending
 router.patch("/submit", async (req, res) => {
   try {
-    const { id, eventName } = req.body;
+    const { id, textInEmail, eventName } = req.body;
+    console.log("textInEmail", textInEmail);
     const orderToUpdateStatus = await Order.findByPk(id);
     const updatedOrder = await orderToUpdateStatus.update({
       status: "pending",
@@ -92,6 +94,8 @@ router.patch("/submit", async (req, res) => {
     if (!orderToUpdateStatus) {
       return res.status(404).send("This order doesn't found");
     }
+    //send email when submitting the party
+    sendEmail("kate.gordin@gmail.com", textInEmail, eventName);
     //update status in order
     res.send(updatedOrder.toJSON());
   } catch (e) {
