@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       dateTime: DataTypes.STRING,
       status: DataTypes.STRING,
-      eventName: { type: DataTypes.STRING, unique: true },
+      eventName: { type: DataTypes.STRING },
     },
     {
       sequelize,
