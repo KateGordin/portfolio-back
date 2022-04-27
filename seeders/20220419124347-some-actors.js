@@ -9,7 +9,7 @@ module.exports = {
           name: "Spiderman",
           description: "Very good and interesting program",
           image:
-            "https://upload.wikimedia.org/wikipedia/commons/9/90/Spiderman.JPG",
+            "https://www.bounceandparty.com.au/wp-content/uploads/2018/06/Boys-party-image-gallery-3.jpg",
           price: 150,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -19,7 +19,7 @@ module.exports = {
           name: "Fyok",
           description: "Super bright b-day party",
           image:
-            "https://ekomfort.ru/wa-data/public/shop/products/22/80/18022/images/18774/18774.970.jpg",
+            "https://partypanda.com.ua/storage/services/December2019/zYIKqRaXTyMpmt19GM83.jpg",
           price: 100,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -29,7 +29,7 @@ module.exports = {
           name: "Ninja turtles",
           description: "Nice adventure with four Ninja",
           image:
-            "https://cdn.mos.cms.futurecdn.net/khRipjVa7SEL5ndKogPHjj-1200-80.jpg",
+            "https://images2.minutemediacdn.com/image/fetch/w_2000,h_2000,c_fit/https%3A%2F%2Fbamsmackpow.com%2Fwp-content%2Fuploads%2Fgetty-images%2F2016%2F04%2F1157703243.jpeg",
           price: 300,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -39,17 +39,17 @@ module.exports = {
           name: "Princess",
           description: "Cute party with Princess",
           image:
-            "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/newscms/2015_05/870341/150130-latin-disney-princess-wide.jpg",
+            "https://www.yabadoo.com.au/wp-content/uploads/2018/06/Princess-Static-Image.jpg",
           price: 100,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
 
         {
-          name: "Minion",
-          description: "Fun and funny",
+          name: "Captain America",
+          description: "Super party",
           image:
-            "https://p4.wallpaperbetter.com/wallpaper/291/597/215/5c1c970d40286-wallpaper-preview.jpg",
+            "http://partycharactersforkids.com/wp-content/uploads/2012/10/captain-america-3_400x263.jpg",
           price: 150,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -59,7 +59,7 @@ module.exports = {
           name: "Santa",
           description: "Magic Christmas party with Santa",
           image:
-            "https://images.theconversation.com/files/302306/original/file-20191118-169393-r78x4o.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=675.0&fit=crop",
+            "https://media.istockphoto.com/photos/closeup-portrait-of-his-he-amazed-stunned-funky-fat-overweight-plump-picture-id1176755787?k=20&m=1176755787&s=612x612&w=0&h=EGwSQiYDu5iuWjMZW2D8J3Z8jNjFlNa0M0HvA0rE5Vc=",
           price: 250,
           createdAt: new Date(),
           updatedAt: new Date(),
