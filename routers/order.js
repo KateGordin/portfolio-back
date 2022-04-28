@@ -86,7 +86,9 @@ router.patch("/submit", async (req, res) => {
   try {
     const { id, textInEmail, eventName } = req.body;
     console.log("textInEmail", textInEmail);
-    const orderToUpdateStatus = await Order.findByPk(id);
+    const orderToUpdateStatus = await Order.findByPk(id, {
+      include: [{ model: OrderItem, include: [Actor] }],
+    });
     const updatedOrder = await orderToUpdateStatus.update({
       status: "pending",
       eventName,
@@ -94,8 +96,16 @@ router.patch("/submit", async (req, res) => {
     if (!orderToUpdateStatus) {
       return res.status(404).send("This order doesn't found");
     }
+
+    const actors = orderToUpdateStatus.orderItems;
     //send email when submitting the party
-    sendEmail("kate.gordin@gmail.com", textInEmail, eventName);
+    console.log(actors);
+
+    const text = `${textInEmail} <br /> ${actors
+      .map((a) => a.actor.name)
+      .join(" - ")}`;
+
+    sendEmail("kate.gordin@gmail.com", text, eventName);
     //update status in order
     res.send(updatedOrder.toJSON());
   } catch (e) {
