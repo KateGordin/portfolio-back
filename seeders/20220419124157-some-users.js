@@ -12,6 +12,7 @@ module.exports = {
           password: bcrypt.hashSync("liam", 10),
           createdAt: new Date(),
           updatedAt: new Date(),
+          review: "I had party with LUCKY, it was awesome",
         },
         {
           name: "Olivia",
@@ -19,6 +20,7 @@ module.exports = {
           password: bcrypt.hashSync("olivia", 10),
           createdAt: new Date(),
           updatedAt: new Date(),
+          review: "Thanks for b-day party",
         },
         {
           name: "James",
@@ -26,6 +28,7 @@ module.exports = {
           password: bcrypt.hashSync("james", 10),
           createdAt: new Date(),
           updatedAt: new Date(),
+          review: "I like Spiderman, thank you",
         },
         {
           name: "Henry",
@@ -33,6 +36,7 @@ module.exports = {
           password: bcrypt.hashSync("henry", 10),
           createdAt: new Date(),
           updatedAt: new Date(),
+          review: "Highly recommended",
         },
       ],
       {}

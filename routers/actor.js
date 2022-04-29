@@ -6,7 +6,7 @@ const router = new Router();
 router.get("/", async (req, res, next) => {
   try {
     const allActors = await Actors.findAll();
-    console.log("allActors", allActors);
+    // console.log("allActors", allActors);
     res.send(allActors);
   } catch (e) {
     console.log(e.message);

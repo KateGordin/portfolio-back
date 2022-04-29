@@ -4,6 +4,7 @@ const actorRouter = require("./routers/actor");
 const orderRouter = require("./routers/order");
 const authRouter = require("./routers/auth");
 const emailRouter = require("./routers/email");
+const reviewRouter = require("./routers/review");
 var AWS = require("aws-sdk");
 
 AWS.config.update({ region: "eu-west-3" });
@@ -16,5 +17,6 @@ app.use("/actor", actorRouter);
 app.use("/order", orderRouter);
 app.use("/auth", authRouter);
 app.use("/email", emailRouter);
+app.use("/review", reviewRouter);
 
 app.listen(4000);
