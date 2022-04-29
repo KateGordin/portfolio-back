@@ -6,6 +6,7 @@ const authRouter = require("./routers/auth");
 const emailRouter = require("./routers/email");
 const reviewRouter = require("./routers/review");
 var AWS = require("aws-sdk");
+const PORT = process.env.PORT || 4000;
 
 AWS.config.update({ region: "eu-west-3" });
 const app = express();
@@ -19,4 +20,4 @@ app.use("/auth", authRouter);
 app.use("/email", emailRouter);
 app.use("/review", reviewRouter);
 
-app.listen(4000);
+app.listen(PORT);
