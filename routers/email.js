@@ -14,7 +14,7 @@ router.post("/sendEmail", async (req, res) => {
 
     res.send();
   } catch (e) {
-    console.log(e.message);
+    console.error(e);
   }
 });
 

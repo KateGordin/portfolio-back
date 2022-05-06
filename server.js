@@ -7,8 +7,12 @@ const emailRouter = require("./routers/email");
 const reviewRouter = require("./routers/review");
 var AWS = require("aws-sdk");
 const PORT = process.env.PORT || 4000;
-
-AWS.config.update({ region: "eu-west-3" });
+v;
+AWS.config.update({
+  region: "eu-west-3",
+  AWS_ACCESS_KEY_ID: process.env.aws_access_key_id,
+  AWS_SECRET_ACCESS_KEY: process.env.aws_secret_access_key,
+});
 const app = express();
 
 app.use(express.json());
