@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const actorRouter = require("./routers/actor");
 const orderRouter = require("./routers/order");
 const authRouter = require("./routers/auth");
@@ -10,8 +11,6 @@ const PORT = process.env.PORT || 4000;
 
 AWS.config.update({
   region: "eu-west-3",
-  AWS_ACCESS_KEY_ID: process.env.aws_access_key_id,
-  AWS_SECRET_ACCESS_KEY: process.env.aws_secret_access_key,
 });
 const app = express();
 

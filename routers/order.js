@@ -89,13 +89,15 @@ router.patch("/submit", async (req, res) => {
     const orderToUpdateStatus = await Order.findByPk(id, {
       include: [{ model: OrderItem, include: [Actor] }],
     });
+
+    if (!orderToUpdateStatus) {
+      return res.status(404).send("This order doesn't found");
+    }
+
     const updatedOrder = await orderToUpdateStatus.update({
       status: "pending",
       eventName,
     });
-    if (!orderToUpdateStatus) {
-      return res.status(404).send("This order doesn't found");
-    }
 
     const actors = orderToUpdateStatus.orderItems;
     //send email when submitting the party
