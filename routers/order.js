@@ -35,10 +35,7 @@ router.post("/addOrderItem", authMiddleWare, async (req, res) => {
     });
 
     if (!currentOrder) {
-      currentOrder = await Order.create({
-        userId: req.user.id,
-        status: "draft",
-      });
+      return res.status(404).send("Drafft Order does not exist");
     }
 
     const orderItem = await OrderItem.create({

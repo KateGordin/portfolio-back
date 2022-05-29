@@ -49,6 +49,11 @@ router.post("/signup", async (req, res) => {
       name,
     });
 
+    await Order.create({
+      userId: newUser.id,
+      status: "draft",
+    });
+
     delete newUser.dataValues["password"]; // don't send back the password hash
 
     const token = toJWT({ userId: newUser.id });
