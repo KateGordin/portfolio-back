@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const { Router } = require("express");
 const { toJWT } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
+const {DRAFT} = require("../utils/constants");
 const User = require("../models/").user;
 const Order = require("../models").order;
 const OrderItem = require("../models").orderItem;
@@ -51,7 +52,7 @@ router.post("/signup", async (req, res) => {
 
     await Order.create({
       userId: newUser.id,
-      status: "draft",
+      status: DRAFT,
     });
 
     delete newUser.dataValues["password"]; // don't send back the password hash
@@ -78,7 +79,7 @@ router.get("/me", authMiddleware, async (req, res) => {
   delete req.user.dataValues["password"];
 
   const order = await Order.findOne({
-    where: { status: "draft", userId: req.user.id },
+    where: { status: DRAFT, userId: req.user.id },
     include: [{ model: OrderItem, include: [Actor] }],
   });
   res.status(200).send({ user: req.user.dataValues, cart: order });

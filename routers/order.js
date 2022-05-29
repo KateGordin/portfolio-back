@@ -6,6 +6,7 @@ const OrderItem = require("../models").orderItem;
 const router = new Router();
 const authMiddleWare = require("../auth/middleware");
 const { sendEmail } = require("../services/emailService");
+const {DRAFT} = require("../utils/constants");
 
 //create new order (with dateTime and userId)
 router.post("/", async (req, res) => {
@@ -16,7 +17,7 @@ router.post("/", async (req, res) => {
     }
     const newOrder = await Order.create({
       ...req.body,
-      status: "draft",
+      status: DRAFT,
     });
 
     res.json(newOrder);
@@ -31,7 +32,7 @@ router.post("/addOrderItem", authMiddleWare, async (req, res) => {
     const { actorId } = req.body;
 
     let currentOrder = await Order.findOne({
-      where: { status: "draft", userId: req.user.id },
+      where: { status: DRAFT, userId: req.user.id },
     });
 
     if (!currentOrder) {
@@ -56,7 +57,7 @@ router.post("/addOrderItem", authMiddleWare, async (req, res) => {
 router.get("/getDraftOrder", authMiddleWare, async (req, res, next) => {
   try {
     const order = await Order.findOne({
-      where: { status: "draft", userId: req.user.id },
+      where: { status: DRAFT, userId: req.user.id },
       include: [{ model: OrderItem, include: [Actor] }],
     });
     res.send(order);
