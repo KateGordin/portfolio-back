@@ -16,4 +16,28 @@ router.get("/getReviews", async (req, res, next) => {
   }
 });
 
+//update user.review
+router.patch("/:id", async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const reviewToUpdate = req.body.review;
+
+    const userToUpdate = await Users.findByPk(userId);
+    if (!userToUpdate) {
+      return res.status(404).send("User not found");
+    }
+
+    const updatedUserWithReview = await userToUpdate.update(
+      {
+        review: reviewToUpdate,
+      },
+      { where: { id: userId } }
+    );
+
+    res.json(updatedUserWithReview);
+  } catch (e) {
+    console.log(e.message);
+  }
+});
+
 module.exports = router;

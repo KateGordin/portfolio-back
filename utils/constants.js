@@ -1,2 +1,4 @@
 // Order statuses
-export const DRAFT = "draft";
+const DRAFT = "draft";
+
+module.exports = { DRAFT };
