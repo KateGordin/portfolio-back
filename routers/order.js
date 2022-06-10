@@ -31,7 +31,7 @@ router.post("/addOrderItem", authMiddleWare, async (req, res) => {
   try {
     const { actorId } = req.body;
 
-    let currentOrder = await Order.findOrCreate({
+    const [currentOrder] = await Order.findOrCreate({
       where: { status: DRAFT, userId: req.user.id },
     });
 
