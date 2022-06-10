@@ -6,7 +6,7 @@ const OrderItem = require("../models").orderItem;
 const router = new Router();
 const authMiddleWare = require("../auth/middleware");
 const { sendEmail } = require("../services/emailService");
-const {DRAFT} = require("../utils/constants");
+const { DRAFT } = require("../utils/constants");
 
 //create new order (with dateTime and userId)
 router.post("/", async (req, res) => {
@@ -31,13 +31,9 @@ router.post("/addOrderItem", authMiddleWare, async (req, res) => {
   try {
     const { actorId } = req.body;
 
-    let currentOrder = await Order.findOne({
+    let currentOrder = await Order.findOrCreate({
       where: { status: DRAFT, userId: req.user.id },
     });
-
-    if (!currentOrder) {
-      return res.status(404).send("Drafft Order does not exist");
-    }
 
     const orderItem = await OrderItem.create({
       orderId: currentOrder.id,

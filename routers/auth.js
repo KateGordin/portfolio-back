@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const { Router } = require("express");
 const { toJWT } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
-const {DRAFT} = require("../utils/constants");
+const { DRAFT } = require("../utils/constants");
 const User = require("../models/").user;
 const Order = require("../models").order;
 const OrderItem = require("../models").orderItem;
@@ -48,11 +48,6 @@ router.post("/signup", async (req, res) => {
       email,
       password: bcrypt.hashSync(password, 10),
       name,
-    });
-
-    await Order.create({
-      userId: newUser.id,
-      status: DRAFT,
     });
 
     delete newUser.dataValues["password"]; // don't send back the password hash
