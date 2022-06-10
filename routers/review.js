@@ -5,9 +5,9 @@ const Users = require("../models").user;
 const router = new Router();
 
 //all reviews
-router.get("/getReviews", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    const reviews = await Users.findAll();
+    const reviews = await Users.findAll({ review });
 
     console.log("reviews", reviews);
     res.send(reviews);
