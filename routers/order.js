@@ -50,7 +50,7 @@ router.post("/addOrderItem", authMiddleWare, async (req, res) => {
 });
 
 //all orders with orderItems
-router.get("/getDraftOrder", authMiddleWare, async (req, res, next) => {
+router.get("/getDraftOrder", authMiddleWare, async (req, res) => {
   try {
     const order = await Order.findOne({
       where: { status: DRAFT, userId: req.user.id },
