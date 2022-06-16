@@ -8,24 +8,6 @@ const authMiddleWare = require("../auth/middleware");
 const { sendEmail } = require("../services/emailService");
 const { DRAFT } = require("../utils/constants");
 
-//create new order (with dateTime and userId)
-router.post("/", async (req, res) => {
-  try {
-    if (!req.body.dateTime || !req.body.userId) {
-      res.status(400).send("Please, provide dateTime and userId");
-      return;
-    }
-    const newOrder = await Order.create({
-      ...req.body,
-      status: DRAFT,
-    });
-
-    res.json(newOrder);
-  } catch (e) {
-    console.log(e.message);
-  }
-});
-
 //create order item with orderId and actorId
 router.post("/addOrderItem", authMiddleWare, async (req, res) => {
   try {
@@ -63,7 +45,7 @@ router.get("/getDraftOrder", authMiddleWare, async (req, res) => {
 });
 
 //delete order item
-router.delete("/deleteOrderItem/:id", async (req, res) => {
+router.delete("/deleteOrderItem/:id", authMiddleWare, async (req, res) => {
   try {
     const orderItemId = parseInt(req.params.id);
     const orderItem = await OrderItem.findByPk(orderItemId);
@@ -79,7 +61,7 @@ router.delete("/deleteOrderItem/:id", async (req, res) => {
 });
 
 //change status of order from draft to pending
-router.patch("/submit", async (req, res) => {
+router.patch("/submit", authMiddleWare, async (req, res) => {
   try {
     const { id, textInEmail, eventName } = req.body;
     console.log("textInEmail", textInEmail);
